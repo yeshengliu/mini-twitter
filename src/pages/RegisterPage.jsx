@@ -38,8 +38,8 @@ function RegisterPage() {
         password: formValue.password,
       });
       setErrMsg('');
-      // redirect to main page
-      window.location.href = "/";
+      // redirect to login page
+      window.location.href = "/login";
     } catch (err) {
       setErrMsg(err.response.data);
     } 
@@ -144,7 +144,7 @@ function RegisterPage() {
 
             <p>
               Already have an account?{" "}
-              <a href="/" className="link-info">
+              <a href="/login" className="link-info">
                 Login here
               </a>
             </p>

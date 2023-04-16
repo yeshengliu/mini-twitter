@@ -20,6 +20,7 @@ app.use(cookieParser());
 
 // API Routes
 app.use('/api/register/', require('./src/api/register'));
+app.use('/api/login/', require('./src/api/auth'));
 
 let frontend_dir = path.join(__dirname, '.', 'dist');
 app.use(express.static(frontend_dir));

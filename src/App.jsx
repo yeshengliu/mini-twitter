@@ -15,7 +15,7 @@ function App() {
       <div className="App">
         <AppContext.Provider value={{}}>
           <Routes>
-            <Route exact path="/" element={<LoginPage />} />
+            <Route exact path="/login" element={<LoginPage />} />
             <Route exact path="/register" element={<RegisterPage />} />
           </Routes>
         </AppContext.Provider>

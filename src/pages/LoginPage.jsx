@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -10,6 +10,7 @@ import {
 } from "mdb-react-ui-kit";
 import { MDBIcon } from "mdbreact";
 import loginimg from "../assets/login.jpg";
+import axios from "axios";
 
 function LoginPage() {
   const [formValue, setFormValue] = React.useState({
@@ -22,9 +23,24 @@ function LoginPage() {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, password);
+    try {
+      if (!formValue.username || !formValue.password) {
+        setErrMsg("Please fill out all fields");
+        return;
+      }
+      await axios.post("/api/login", {
+        username: formValue.username,
+        password: formValue.password,
+      });
+      setErrMsg('');
+      // redirect to main page
+      window.location.href = "/";
+    } catch (err) {
+      console.error(err);
+      setErrMsg(err.response.data);
+    }
   };
 
   return (
@@ -84,9 +100,9 @@ function LoginPage() {
             >Login</MDBBtn>
 
             {errMsg && (
-                <div className="bg-danger mb-4 p-3 mx-auto w-100 rounded-5 bg-opacity-25">
-                  {errMsg}
-                </div>
+              <div className="bg-danger mb-4 p-3 mx-auto w-100 rounded-5 bg-opacity-25">
+                {errMsg}
+              </div>
             )}
 
             <p>
