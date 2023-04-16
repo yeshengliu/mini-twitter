@@ -4,16 +4,24 @@ import {
   MDBContainer,
   MDBRow,
   MDBCol,
-  MDBIcon,
   MDBInput,
+  MDBValidation,
+  MDBValidationItem
 } from "mdb-react-ui-kit";
-
+import { MDBIcon } from "mdbreact";
 import loginimg from "../assets/login.jpg";
 
 function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formValue, setFormValue] = React.useState({
+    username: "",
+    password: "",
+  });
+  const [errMsg, setErrMsg] = React.useState("");
 
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(username, password);
@@ -23,62 +31,72 @@ function LoginPage() {
     <MDBContainer fluid>
       <MDBRow>
         <MDBCol sm="6">
-          <form onSubmit={handleSubmit}>
-            <div className="d-flex flex-row ps-5 pt-5">
-              <MDBIcon
-                fas
-                icon="crow fa-3x me-3"
-                style={{ color: "#709085" }}
-              />
-              <span className="h1 fw-bold mb-0">Twitter</span>
-            </div>
+          <div className="pt-5">
+            <MDBIcon
+              fas
+              icon="crow fa-3x me-3"
+              style={{ color: "#709085" }}
+            />
+            <span className="h1 fw-bold mb-0">Twitter</span>
+          </div>
 
-            <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-4">
+          <MDBValidation className='row g-3 pe-5 pt-5 mx-5' onSubmit={handleSubmit}>
+            <div className="w-50 pt-4">
               <h3
-                className="fw-normal mb-3 ps-5 pb-3"
+                className="fw-normal mb-3 ps-0 pb-3 text-start"
                 style={{ letterSpacing: "1px" }}
               >
-                Log in
+                Login
               </h3>
+            </div>
 
+            <MDBValidationItem className='col-md-12' feedback="Please fill out username." invalid>
               <MDBInput
-                wrapperClass="mb-4 mx-5 w-100"
+                wrapperClass="mb-4 w-100"
+                value={formValue.username}
+                name='username'
+                onChange={onChange}
+                required
                 label="Username"
-                id="formControlLg"
                 type="username"
                 size="lg"
-                onChange={(e) => setUsername(e.target.value)}
               />
+            </MDBValidationItem>
+
+            <MDBValidationItem className='col-md-12' feedback="Please fill out password" invalid>
               <MDBInput
-                wrapperClass="mb-4 mx-5 w-100"
+                wrapperClass="mb-4"
+                value={formValue.password}
+                name='password'
+                onChange={onChange}
+                required
                 label="Password"
-                id="formControlLg"
                 type="password"
                 size="lg"
-                onChange={(e) => setPassword(e.target.value)}
               />
+            </MDBValidationItem>
 
-              <MDBBtn
-                type="submit"
-                className="mb-4 px-5 mx-5 w-100"
-                color="info"
-                size="lg"
-              >
-                Login
-              </MDBBtn>
-              {/* <p className="small mb-5 pb-lg-3 ms-5">
-              <a class="text-muted" href="#!">
-                Forgot password?
+            <MDBBtn
+              type="submit"
+              className="w-75 mb-4 mx-auto"
+              color="info"
+              size="lg"
+            >Login</MDBBtn>
+
+            {errMsg && (
+                <div className="bg-danger mb-4 p-3 mx-auto w-100 rounded-5 bg-opacity-25">
+                  {errMsg}
+                </div>
+            )}
+
+            <p>
+            Don't have an account?{" "}
+              <a href="/register" className="link-info">
+              Register here
               </a>
-            </p> */}
-              <p className="ms-5">
-                Don't have an account?{" "}
-                <a href="/register" className="link-info">
-                  Register here
-                </a>
-              </p>
-            </div>
-          </form>
+            </p>
+
+          </MDBValidation>
         </MDBCol>
 
         <MDBCol sm="6" className="d-none d-sm-block px-0">
