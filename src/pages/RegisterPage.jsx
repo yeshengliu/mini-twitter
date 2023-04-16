@@ -8,15 +8,20 @@ import {
   MDBInput,
 } from "mdb-react-ui-kit";
 import loginimg from "../assets/login.jpg";
+import axios from "axios";
 
 function RegisterPage() {
   const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username, email, password);
+    await axios.post("/api/register", {
+      username,
+      email,
+      password
+    })
   };
 
   return (
