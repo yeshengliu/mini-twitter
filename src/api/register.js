@@ -28,10 +28,15 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    let user = await UserModel.findUserByEmail(email);
+    let user;
     // Return 401 if user already exists
+    user = await UserModel.findUserByUsername(username);
     if (user) {
-      return res.status(401).send("User already exists");
+      return res.status(401).send("Username is already taken");
+    }
+    user = await UserModel.findUserByEmail(email);
+    if (user) {
+      return res.status(401).send("This email is already registered");
     }
 
     // Create new user

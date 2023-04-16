@@ -4,24 +4,45 @@ import {
   MDBContainer,
   MDBRow,
   MDBCol,
-  MDBIcon,
   MDBInput,
+  MDBValidation,
+  MDBValidationItem
 } from "mdb-react-ui-kit";
+import { MDBIcon } from "mdbreact";
 import loginimg from "../assets/login.jpg";
 import axios from "axios";
 
 function RegisterPage() {
-  const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [formValue, setFormValue] = React.useState({
+    username: "",
+    email: "",
+    password: "",
+    rePassword: "",
+  });
+  const [errMsg, setErrMsg] = React.useState("");
+
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("/api/register", {
-      username,
-      email,
-      password
-    })
+    try {
+      if (formValue.password !== formValue.rePassword) {
+        setErrMsg("Passwords do not match");
+        return;
+      }
+      await axios.post("/api/register", {
+        username: formValue.username,
+        email: formValue.email,
+        password: formValue.password,
+      });
+      setErrMsg('');
+      // redirect to main page
+      window.location.href = "/";
+    } catch (err) {
+      setErrMsg(err.response.data);
+    } 
   };
 
   return (
@@ -36,76 +57,98 @@ function RegisterPage() {
           />
         </MDBCol>
         <MDBCol sm="6">
-          <form onSubmit={handleSubmit}>
-            <div className="d-flex flex-row ps-5 pt-5">
-              <MDBIcon
-                fas
-                icon="crow fa-3x me-3"
-                style={{ color: "#709085" }}
-              />
-              <span className="h1 fw-bold mb-0">Twitter</span>
-            </div>
+          <div className="pt-5">
+            <MDBIcon
+              fas
+              icon="crow fa-3x me-3"
+              style={{ color: "#709085" }}
+            />
+            <span className="h1 fw-bold mb-0">Twitter</span>
+          </div>
 
-            <div className="d-flex flex-column justify-content-center h-custom-2 w-75 pt-4">
+          {/* https://mdbootstrap.com/docs/react/forms/validation/#docsTabsOverview */}
+          <MDBValidation className='row g-3 pe-5 pt-5 mx-5' onSubmit={handleSubmit}>
+            <div className="w-50 pt-4">
               <h3
-                className="fw-normal mb-3 ps-5 pb-3"
+                className="fw-normal mb-3 ps-0 pb-3 text-start"
                 style={{ letterSpacing: "1px" }}
               >
                 Register
               </h3>
-
+            </div>
+            
+            <MDBValidationItem className='col-md-12' feedback="Please fill out username." invalid>
               <MDBInput
-                wrapperClass="mb-4 mx-5 w-100"
+                wrapperClass="mb-4 w-100"
+                value={formValue.username}
+                name='username'
+                onChange={onChange}
+                required
                 label="Username"
                 type="username"
                 size="lg"
-                onChange={(e) => setUsername(e.target.value)}
               />
-
+            </MDBValidationItem>
+            
+            <MDBValidationItem className='col-md-12' feedback="Please fill out email." invalid>
               <MDBInput
-                wrapperClass="mb-4 mx-5 w-100"
+                wrapperClass="mb-4 w-100"
+                value={formValue.email}
+                name='email'
+                onChange={onChange}
+                required
                 label="Email"
                 type="email"
                 size="lg"
-                onChange={(e) => setEmail(e.target.value)}
               />
-
+            </MDBValidationItem>
+            
+            <MDBValidationItem className='col-md-12' feedback="Please fill out password" invalid>
               <MDBInput
-                wrapperClass="mb-4 mx-5 w-100"
+                wrapperClass="mb-4"
+                value={formValue.password}
+                name='password'
+                onChange={onChange}
+                required
                 label="Password"
                 type="password"
                 size="lg"
-                onChange={(e) => setPassword(e.target.value)}
               />
+            </MDBValidationItem>
 
+            <MDBValidationItem className='col-md-12' feedback="Please re-enter password" invalid>
               <MDBInput
-                wrapperClass="mb-4 mx-5 w-100"
-                label="Retype Password"
+                wrapperClass="mb-4"
+                value={formValue.rePassword}
+                name='rePassword'
+                onChange={onChange}
+                required
+                label="Re-enter Password"
                 type="password"
                 size="lg"
               />
+            </MDBValidationItem>
+            
+            <MDBBtn
+              type="submit"
+              className="w-75 mb-4 mx-auto"
+              color="info"
+              size="lg"
+            >Register</MDBBtn>
 
-              <MDBBtn
-                type="submit"
-                className="mb-4 px-5 mx-5 w-100"
-                color="info"
-                size="lg"
-              >
-                Register
-              </MDBBtn>
-              {/* <p className="small mb-5 pb-lg-3 ms-5">
-              <a class="text-muted" href="#!">
-                Forgot password?
+            {errMsg && (
+                <div className="bg-danger mb-4 p-3 mx-auto w-100 rounded-5 bg-opacity-25">
+                  {errMsg}
+                </div>
+            )}
+
+            <p>
+              Already have an account?{" "}
+              <a href="/" className="link-info">
+                Login here
               </a>
-            </p> */}
-              <p className="ms-5">
-                Already have an account?{" "}
-                <a href="/" className="link-info">
-                  Login here
-                </a>
-              </p>
-            </div>
-          </form>
+            </p>
+          </MDBValidation>
         </MDBCol>
       </MDBRow>
     </MDBContainer>
