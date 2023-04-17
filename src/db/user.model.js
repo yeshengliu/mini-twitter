@@ -14,9 +14,14 @@ function findUserByEmail(email) {
   return UserModel.findOne({ email: email.toLowerCase() }).exec();
 }
 
+function findUserById(id) {
+  return UserModel.findById(id).exec();
+}
+
 module.exports = {
   UserModel,
   createUser,
   findUserByUsername,
   findUserByEmail,
+  findUserById
 }

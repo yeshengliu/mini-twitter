@@ -11,6 +11,7 @@ import {
 import { MDBIcon } from "mdbreact";
 import loginimg from "../assets/login.jpg";
 import axios from "axios";
+import cookie from "js-cookie";
 
 function LoginPage() {
   const [formValue, setFormValue] = React.useState({
@@ -30,11 +31,13 @@ function LoginPage() {
         setErrMsg("Please fill out all fields");
         return;
       }
-      await axios.post("/api/login", {
+      const res = await axios.post("/api/login", {
         username: formValue.username,
         password: formValue.password,
       });
       setErrMsg('');
+      // set cookie
+      cookie.set("token", res.data);
       // redirect to main page
       window.location.href = "/";
     } catch (err) {
