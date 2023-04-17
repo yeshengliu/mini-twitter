@@ -1,40 +1,35 @@
 const express = require("express");
-// const helper = require("./backend/helper");
-// const pokemon = require("./backend/pokemon");
-// const users = require("./backend/user");
 const app = express();
 const mongoose = require("mongoose");
+require("dotenv").config({ path: "./config.env" });
+const cors = require("cors");
+const path = require("path");
+const cookieParser = require("cookie-parser");
 
-const mongoDBEndpoint =
-  "mongodb+srv://yuxuanlin:banana1234@cs5610.v64437n.mongodb.net/?retryWrites=true&w=majority";
-mongoose.connect(mongoDBEndpoint, { useNewUrlParser: true });
+// Connect to mongodb
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "Error connecting to MongoDB:"));
 
+// Middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-// app.use("/api/pokemon/", pokemon);
-// app.use("/api/users/", users);
+// API Routes
+app.use('/api/register/', require('./src/api/register'));
+app.use('/api/login/', require('./src/api/login'));
+app.use('/api/auth/', require('./src/api/auth'));
 
-//"http://localhost:8000" + "/"
-app.get("/", function (request, response) {
-  // response.send('Hello web dev, again!!!');
-  // response.send(helper.returnWords());
-  response.send("I am preventing the next GET method from firign");
+let frontend_dir = path.join(__dirname, '.', 'dist');
+app.use(express.static(frontend_dir));
+app.get('*', function (req, res) {
+  console.log("received request");
+  res.sendFile(path.join(frontend_dir, "index.html"));
 });
 
-app.get("/", function (request, response) {
-  // response.send('Hello web dev, again!!!');
-  // response.send(helper.returnWords());
-  response.send("This is the response from the GET method");
-});
-
-app.post("/", function (request, response) {
-  response.send("This is a response from the POST methodd");
-});
-
-app.listen(8000, function () {
-  console.log("Starting server now...");
-});
+app.listen(process.env.PORT || 8000, function() {
+  console.log("Express server is running");
+})
