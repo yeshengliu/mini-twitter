@@ -16,6 +16,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import IndexPage from "./pages/IndexPage";
 import WelcomePage from "./pages/WelcomePage";
+import Navbar from "./components/Navbar";
 
 export const AppContext = createContext();
 
@@ -52,6 +53,7 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar />
       <AppContext.Provider value={{}}>
         <Routes>
           <Route exact path="/" element={<IndexPage />} />

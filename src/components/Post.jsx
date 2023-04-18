@@ -13,7 +13,7 @@ import {
 
 function Post() {
   return (
-    <MDBCard className="w-75" alignment="start">
+    <MDBCard className="fluid" alignment="start">
       <MDBCardHeader>
         <img
           src="https://mdbootstrap.com/img/Photos/Avatars/img%20(6).jpg"

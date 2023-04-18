@@ -9,7 +9,7 @@ import {
 
 function TweetBox() {
   return (
-    <MDBCard className="w-75" alignment="start" border="secondary">
+    <MDBCard className="fluid" alignment="start" border="secondary">
       <MDBCardHeader>
         <img
           src="https://mdbootstrap.com/img/Photos/Avatars/img%20(6).jpg"
