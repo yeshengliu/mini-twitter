@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { MDBIcon } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../App";
+import NotLoggedIn from "./navbar/NotLoggedIn";
+import LoggedIn from "./navbar/LoggedIn";
 
 function Navbar() {
+  const { isLoggedIn, user } = useContext(AppContext);
   const navigate = useNavigate();
   return (
     <nav class="navbar navbar-light bg-light fluid">
@@ -14,24 +18,7 @@ function Navbar() {
         </div>
 
         <div class="d-flex align-items-center">
-          <button
-            type="button"
-            class="btn btn-link px-3 me-2"
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary me-3"
-            onClick={() => {
-              navigate("/register");
-            }}
-          >
-            Sign up for free
-          </button>
+          {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}
         </div>
       </div>
     </nav>

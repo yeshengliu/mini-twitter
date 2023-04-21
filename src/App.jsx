@@ -21,6 +21,9 @@ import Navbar from "./components/Navbar";
 export const AppContext = createContext();
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [user, setUser] = useState(null);
+
   /** 
  * TODO: 
  * Redirect to login page if user is not logged in
@@ -53,8 +56,16 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <AppContext.Provider value={{}}>
+      <AppContext.Provider
+        value={{
+          isLoggedIn,
+          setIsLoggedIn,
+          user,
+          setUser,
+        }}
+      >
+        <Navbar />
+
         <Routes>
           <Route exact path="/" element={<IndexPage />} />
           <Route exact path="/login" element={<LoginPage />} />
