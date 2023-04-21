@@ -16,10 +16,9 @@ function LoggedIn() {
           className="rounded-circle"
           height={"30px"}
         />
-        <MDBDropdownToggle tag="a" className="shadow-0">
-          Profile Name
-        </MDBDropdownToggle>
+        <MDBDropdownToggle className="shadow-0">Profile Name</MDBDropdownToggle>
         <MDBDropdownMenu>
+          <MDBDropdownItem link>Setting</MDBDropdownItem>
           <MDBDropdownItem link>My Page</MDBDropdownItem>
           <MDBDropdownItem link>LogOut</MDBDropdownItem>
         </MDBDropdownMenu>

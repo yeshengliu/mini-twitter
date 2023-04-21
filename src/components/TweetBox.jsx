@@ -1,13 +1,49 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   MDBCard,
   MDBCardBody,
   MDBCardImage,
   MDBBtn,
   MDBCardHeader,
+  MDBValidation,
+  MDBValidationItem,
+  MDBInput,
 } from "mdb-react-ui-kit";
+import { AppContext } from "../App";
+import axios from "axios";
 
 function TweetBox() {
+  const { userId } = useContext(AppContext);
+
+  const [formValue, setFormValue] = useState({
+    text: "",
+    picUrl: "testUrl",
+  });
+
+  const onChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("submit");
+    if (!userId) {
+      return;
+    }
+
+    try {
+      await axios.post("/api/post", {
+        user: userId,
+        text: formValue.text,
+        picUrl: formValue.picUrl,
+      });
+      setFormValue({ ...formValue, text: "" });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <MDBCard className="fluid" alignment="start" border="secondary">
       <MDBCardHeader>
@@ -19,21 +55,24 @@ function TweetBox() {
         />{" "}
         <a href="">Profile Name</a>
       </MDBCardHeader>
-      <MDBCardBody>
-        <div class="form-outline">
+      <form onSubmit={handleSubmit}>
+        <div className="form-outline">
           <textarea
-            class="form-control"
+            className="form-control"
             id="textAreaExample"
             rows="3"
-          ></textarea>
-          <label class="form-label" for="textAreaExample">
+            value={formValue.text}
+            name="text"
+            onChange={onChange}
+          />
+          <label className="form-label" htmlFor="textAreaExample">
             Start a new tweet
           </label>
         </div>
-        <MDBBtn color="secondary" outline href="#">
+        <MDBBtn type="submit" color="secondary" outline>
           Tweet
         </MDBBtn>
-      </MDBCardBody>
+      </form>
     </MDBCard>
   );
 }

@@ -7,7 +7,7 @@ function NotLoggedIn() {
     <div>
       <button
         type="button"
-        class="btn btn-link px-3 me-2"
+        className="btn btn-link px-3 me-2"
         onClick={() => {
           navigate("/login");
         }}
@@ -16,7 +16,7 @@ function NotLoggedIn() {
       </button>
       <button
         type="button"
-        class="btn btn-secondary me-3"
+        className="btn btn-secondary me-3"
         onClick={() => {
           navigate("/register");
         }}

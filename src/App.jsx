@@ -21,38 +21,39 @@ import Navbar from "./components/Navbar";
 export const AppContext = createContext();
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState("");
 
-  /** 
- * TODO: 
- * Redirect to login page if user is not logged in
+  /**
+   * Redirect to login page if user is not logged in
+   */
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = cookie.get("token");
-    console.log("token", token);
-    // redirect to login page if cookie is not set
+
     if (!token) {
-      navigate("/login");
+      setIsLoggedIn(false);
+      setUserId("");
     } else {
-      const fetchData = async (res) => {
-        try {
-          const res = await axios.get("/api/auth", {
-            headers: { authorization: token },
-          });
-          console.log(res.data);
-        } catch (err) {
-          console.error(err);
-          cookie.remove("token");
-          navigate("/login");
-        }
+      const fetchData = async () => {
+        const res = await axios.get("/api/auth", {
+          headers: { Authorization: token },
+        });
+        console.log(res.data);
+        setIsLoggedIn(true);
+        setUserId(res.data._id);
       };
-      fetchData();
+      fetchData().catch((err) => {
+        // if token is not valid, remove it from cookie
+        console.error(err);
+        cookie.remove("token");
+        setIsLoggedIn(false);
+        setUserId("");
+      });
     }
   }, [navigate]);
-  */
 
   return (
     <div className="App">
@@ -60,17 +61,16 @@ function App() {
         value={{
           isLoggedIn,
           setIsLoggedIn,
-          user,
-          setUser,
+          userId,
+          setUserId,
         }}
       >
         <Navbar />
 
         <Routes>
-          <Route exact path="/" element={<IndexPage />} />
+          <Route exact path="/" element={<WelcomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
-          <Route exact path="/profile" element={<WelcomePage />} />
         </Routes>
       </AppContext.Provider>
     </div>
