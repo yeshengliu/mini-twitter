@@ -19,17 +19,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // API Routes
-app.use('/api/register/', require('./src/api/register'));
-app.use('/api/login/', require('./src/api/login'));
-app.use('/api/auth/', require('./src/api/auth'));
+app.use("/api/register/", require("./src/api/register"));
+app.use("/api/login/", require("./src/api/login"));
+app.use("/api/auth/", require("./src/api/auth"));
+app.use("/api/post/", require("./src/api/post"));
+app.use("/api/user/", require("./src/api/user"));
 
-let frontend_dir = path.join(__dirname, '.', 'dist');
+let frontend_dir = path.join(__dirname, ".", "dist");
 app.use(express.static(frontend_dir));
-app.get('*', function (req, res) {
+app.get("*", function (req, res) {
   console.log("received request");
   res.sendFile(path.join(frontend_dir, "index.html"));
 });
 
-app.listen(process.env.PORT || 8000, function() {
+app.listen(process.env.PORT || 8000, function () {
   console.log("Express server is running");
-})
+});
