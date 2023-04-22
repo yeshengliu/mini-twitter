@@ -22,6 +22,20 @@ function Post(props) {
     text: "",
     picUrl: "testUrl",
   });
+  const [ username, setUsername ] = useState("");
+
+  // Get username from post
+  useEffect(() => {
+    const getUsername = async () => {
+      try {
+        const response = await axios.get(`/api/user/${post.user}`);
+        setUsername(response.data.username);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getUsername();
+  }, []);
 
   // Functions for post editing
   const handleEdit = () => {
@@ -54,8 +68,6 @@ function Post(props) {
     }
   };
 
-  // TODO: click on a post username and redirect to this person's profile
-
   return (
     <MDBCard className="fluid" alignment="start">
       <MDBCardHeader>
@@ -65,7 +77,7 @@ function Post(props) {
           className="rounded-circle"
           height={"50px"}
         />
-        <a href="">{post.user}</a>
+        <a href={`/profile/${username}`}>{username || post.user}</a>
       </MDBCardHeader>
       <MDBCardBody>
         <MDBCardText>{post.text}</MDBCardText>

@@ -53,7 +53,7 @@ function TweetBox() {
           className="rounded-circle"
           height={"50px"}
         />{" "}
-        <a href="">{currUser.username}</a>
+        <a href={`/profile/${currUser.username}`}>{currUser.username}</a>
       </MDBCardHeader>
       <form onSubmit={handleSubmit}>
         <div className="form-outline">

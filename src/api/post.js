@@ -4,15 +4,25 @@ const PostModel = require("../db/post.model");
 
 // Get all posts
 router.get("/", async function (req, res) {
-  const posts = await PostModel.findAllPosts();
-  res.send(posts);
+  try {
+    const posts = await PostModel.findAllPosts();
+    res.status(200).send(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
 });
 
 // Get post with userId
 router.get("/:userId", async function (req, res) {
   const { userId } = req.params;
-  const posts = await PostModel.findPostsByUserId(userId);
-  res.send(posts);
+  try {
+    const posts = await PostModel.findPostsByUserId(userId);
+    res.status(200).send(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
 });
 
 // create post
@@ -23,23 +33,38 @@ router.post("/", async function (req, res) {
     text,
     picUrl,
   });
-  const newPostResponse = await PostModel.createPost(post);
-  res.send("New post created: " + newPostResponse);
+  try {
+    const newPostResponse = await PostModel.createPost(post);
+    res.status(200).send("New post created: " + newPostResponse);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
 });
 
 // delete post
 router.delete("/:id", async function (req, res) {
   const { id } = req.params;
-  await PostModel.deletePost(id);
-  res.send("Post deleted");
+  try {
+    await PostModel.deletePost(id);
+    res.status(200).send("Post deleted");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
 });
 
 // update post text
 router.put("/:id", async function (req, res) {
   const { id } = req.params;
   const { text } = req.body;
-  await PostModel.updatePost(id, text);
-  res.send("Post updated");
+  try {
+    await PostModel.updatePost(id, text);
+    res.status(200).send("Post updated");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
 });
 
 module.exports = router;

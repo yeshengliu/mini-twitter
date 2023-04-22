@@ -15,6 +15,7 @@ import axios from "axios";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
+import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/Navbar";
 
 export const AppContext = createContext();
@@ -69,6 +70,7 @@ function App() {
           <Route exact path="/" element={<WelcomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
+          <Route exact path="/profile/:username" element={<ProfilePage />} />
         </Routes>
       </AppContext.Provider>
     </div>
