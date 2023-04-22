@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const PostModel = require("../db/post.model");
+const UserModel = require("../db/user.model");
 
 // Get all posts
 router.get("/", async function (req, res) {
@@ -14,10 +15,16 @@ router.get("/", async function (req, res) {
 });
 
 // Get post with userId
-router.get("/:userId", async function (req, res) {
-  const { userId } = req.params;
+router.get("/:username", async function (req, res) {
   try {
-    const posts = await PostModel.findPostsByUserId(userId);
+    const { username } = req.params;
+    const user = await UserModel.findUserByUsername(username);
+    
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const posts = await PostModel.findPostsByUserId(user._id);
     res.status(200).send(posts);
   } catch (err) {
     console.error(err);

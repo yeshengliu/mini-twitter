@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Feeds from "../components/Feeds";
 
 function ProfilePage() {
   const { username } = useParams();
 
   return (
-    <div>
-      <h1>{username}</h1>
-    </div>
+    <Feeds usernames={[username]} />
   )
 }
 
