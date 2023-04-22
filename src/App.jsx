@@ -14,7 +14,6 @@ import cookie from "js-cookie";
 import axios from "axios";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import IndexPage from "./pages/IndexPage";
 import WelcomePage from "./pages/WelcomePage";
 import Navbar from "./components/Navbar";
 
@@ -22,7 +21,7 @@ export const AppContext = createContext();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState("");
+  const [user, setUser] = useState({});
 
   /**
    * Redirect to login page if user is not logged in
@@ -35,7 +34,7 @@ function App() {
 
     if (!token) {
       setIsLoggedIn(false);
-      setUserId("");
+      setUser({});
     } else {
       const fetchData = async () => {
         const res = await axios.get("/api/auth", {
@@ -43,14 +42,14 @@ function App() {
         });
         console.log(res.data);
         setIsLoggedIn(true);
-        setUserId(res.data._id);
+        setUser(res.data);
       };
       fetchData().catch((err) => {
         // if token is not valid, remove it from cookie
         console.error(err);
         cookie.remove("token");
         setIsLoggedIn(false);
-        setUserId("");
+        setUser({});
       });
     }
   }, [navigate]);
@@ -61,8 +60,8 @@ function App() {
         value={{
           isLoggedIn,
           setIsLoggedIn,
-          userId,
-          setUserId,
+          user,
+          setUser,
         }}
       >
         <Navbar />

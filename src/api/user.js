@@ -4,18 +4,10 @@ const jwt = require("jsonwebtoken");
 
 const UserModel = require("../db/user.model");
 
-const userDB = [];
-
-router.get("/", function (req, res) {
-  res.send(userDB);
-});
-
-router.post("/", async function (req, res) {
-  const body = req.body;
-
-  const newUserResponse = await UserModel.createUser(body);
-
-  res.send("New user created: " + newUserResponse);
-});
+// router.get("/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const user = await UserModel.findUserById(id);
+//   res.status(200).json(user);
+// });
 
 module.exports = router;

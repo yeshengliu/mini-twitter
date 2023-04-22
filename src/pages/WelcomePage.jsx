@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import TweetBox from "../components/TweetBox";
-import Post from "../components/Post";
+import AllFeeds from "../components/AllFeeds";
 import { AppContext } from "../App";
 
 function WelcomePage() {
@@ -9,10 +9,7 @@ function WelcomePage() {
   return (
     <div>
       {isLoggedIn && <TweetBox />}
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      <AllFeeds />
     </div>
   );
 }

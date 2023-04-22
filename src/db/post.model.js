@@ -10,6 +10,10 @@ function findPostById(id) {
   return PostModel.findById(id).exec();
 }
 
+function findAllPosts() {
+  return PostModel.find().exec();
+}
+
 function findPostsByUserId(userId) {
   return PostModel.find({ user: userId }).exec();
 }
@@ -29,4 +33,5 @@ module.exports = {
   findPostsByUserId,
   deletePost,
   updatePost,
+  findAllPosts,
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   MDBCard,
   MDBCardBody,
@@ -13,7 +13,7 @@ import { AppContext } from "../App";
 import axios from "axios";
 
 function TweetBox() {
-  const { userId } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   const [formValue, setFormValue] = useState({
     text: "",
@@ -28,13 +28,13 @@ function TweetBox() {
     e.preventDefault();
 
     console.log("submit");
-    if (!userId) {
+    if (!user) {
       return;
     }
 
     try {
       await axios.post("/api/post", {
-        user: userId,
+        user: user._id,
         text: formValue.text,
         picUrl: formValue.picUrl,
       });
@@ -53,7 +53,7 @@ function TweetBox() {
           className="rounded-circle"
           height={"50px"}
         />{" "}
-        <a href="">Profile Name</a>
+        <a href="">{user.username}</a>
       </MDBCardHeader>
       <form onSubmit={handleSubmit}>
         <div className="form-outline">

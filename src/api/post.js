@@ -2,6 +2,11 @@ const express = require("express");
 const router = express.Router();
 const PostModel = require("../db/post.model");
 
+// Get all posts
+router.get("/", async function (req, res) {
+  const posts = await PostModel.findAllPosts();
+  res.send(posts);
+});
 // Get post with userId
 router.get("/:userId", async function (req, res) {
   const { userId } = req.params;
