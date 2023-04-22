@@ -11,11 +11,11 @@ function findPostById(id) {
 }
 
 function findAllPosts() {
-  return PostModel.find().exec();
+  return PostModel.find().sort({ timestamp: -1 }).exec();
 }
 
 function findPostsByUserId(userId) {
-  return PostModel.find({ user: userId }).exec();
+  return PostModel.find({ user: userId }).sort({ timestamp: -1 }).exec();
 }
 
 function updatePost(id, post) {
