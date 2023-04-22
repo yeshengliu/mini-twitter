@@ -21,20 +21,19 @@ export const AppContext = createContext();
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
+  const [currUser, setCurrUser] = useState({});
 
   /**
-   * Redirect to login page if user is not logged in
+   * Validate the token and set logged in user
    */
 
   const navigate = useNavigate();
-
   useEffect(() => {
     const token = cookie.get("token");
 
     if (!token) {
       setIsLoggedIn(false);
-      setUser({});
+      setCurrUser({});
     } else {
       const fetchData = async () => {
         const res = await axios.get("/api/auth", {
@@ -42,14 +41,14 @@ function App() {
         });
         console.log(res.data);
         setIsLoggedIn(true);
-        setUser(res.data);
+        setCurrUser(res.data);
       };
       fetchData().catch((err) => {
         // if token is not valid, remove it from cookie
         console.error(err);
         cookie.remove("token");
         setIsLoggedIn(false);
-        setUser({});
+        setCurrUser({});
       });
     }
   }, [navigate]);
@@ -60,8 +59,8 @@ function App() {
         value={{
           isLoggedIn,
           setIsLoggedIn,
-          user,
-          setUser,
+          currUser,
+          setCurrUser,
         }}
       >
         <Navbar />

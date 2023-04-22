@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 
 function Post(props) {
-  const { user } = useContext(AppContext);
+  const { isLoggedIn, currUser } = useContext(AppContext);
   const { post } = props;
 
   // TODO: edit and delete post function
@@ -34,7 +34,7 @@ function Post(props) {
       </MDBCardHeader>
       <MDBCardBody>
         <MDBCardText>{post.text}</MDBCardText>
-        {user && user._id === post.user && (
+        {isLoggedIn && currUser._id === post.user && (
           <MDBBtnGroup shadow="0" aria-label="Basic example">
             <MDBBtn color="secondary" outline href="#">
               Edit

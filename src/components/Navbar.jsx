@@ -6,7 +6,7 @@ import NotLoggedIn from "./navbar/NotLoggedIn";
 import LoggedIn from "./navbar/LoggedIn";
 
 function Navbar() {
-  const { isLoggedIn, userId } = useContext(AppContext);
+  const { isLoggedIn } = useContext(AppContext);
   const navigate = useNavigate();
   return (
     <nav className="navbar navbar-light bg-light fluid">

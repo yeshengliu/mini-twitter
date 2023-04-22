@@ -13,7 +13,7 @@ import { AppContext } from "../App";
 import axios from "axios";
 
 function TweetBox() {
-  const { user } = useContext(AppContext);
+  const { isLoggedIn, currUser } = useContext(AppContext);
 
   const [formValue, setFormValue] = useState({
     text: "",
@@ -28,13 +28,13 @@ function TweetBox() {
     e.preventDefault();
 
     console.log("submit");
-    if (!user) {
+    if (!isLoggedIn) {
       return;
     }
 
     try {
       await axios.post("/api/post", {
-        user: user._id,
+        user: currUser._id,
         text: formValue.text,
         picUrl: formValue.picUrl,
       });
@@ -53,7 +53,7 @@ function TweetBox() {
           className="rounded-circle"
           height={"50px"}
         />{" "}
-        <a href="">{user.username}</a>
+        <a href="">{currUser.username}</a>
       </MDBCardHeader>
       <form onSubmit={handleSubmit}>
         <div className="form-outline">

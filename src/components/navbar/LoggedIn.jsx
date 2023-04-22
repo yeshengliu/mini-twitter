@@ -8,7 +8,7 @@ import {
 import { AppContext } from "../../App";
 
 function LoggedIn() {
-  const { user } = useContext(AppContext);
+  const { currUser } = useContext(AppContext);
 
   // TODO: logout function
   // TODO: go to my page
@@ -24,7 +24,7 @@ function LoggedIn() {
           height={"30px"}
         />
         <MDBDropdownToggle className="shadow-0">
-          {user.username}
+          {currUser.username}
         </MDBDropdownToggle>
         <MDBDropdownMenu>
           <MDBDropdownItem link>Setting</MDBDropdownItem>
