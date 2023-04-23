@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { MDBIcon } from "mdb-react-ui-kit";
+import { MDBContainer, MDBIcon, MDBNavbar, MDBNavbarBrand } from "mdb-react-ui-kit";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../App";
 import NotLoggedIn from "./navbar/NotLoggedIn";
@@ -9,19 +9,17 @@ function Navbar() {
   const { isLoggedIn } = useContext(AppContext);
   const navigate = useNavigate();
   return (
-    <nav className="navbar navbar-light bg-light fluid">
-      <div className="container-fluid">
-        <div>
-          <a className="navbar-brand" href="/">
-            <MDBIcon fas icon="crow fa-2x me-3" style={{ color: "#709085" }} />
-          </a>
-        </div>
+    <MDBNavbar expand='lg' light bgColor='light'>
+      <MDBContainer fluid>
+      
+          <MDBNavbarBrand href="/">
+              <MDBIcon fas icon="crow fa-2x me-3" style={{ color: "#709085" }} />
+          </MDBNavbarBrand>
 
-        <div className="d-flex align-items-center">
           {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}
-        </div>
-      </div>
-    </nav>
+
+      </MDBContainer>
+    </MDBNavbar>
   );
 }
 

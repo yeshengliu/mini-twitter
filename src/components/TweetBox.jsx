@@ -8,6 +8,7 @@ import {
   MDBValidation,
   MDBValidationItem,
   MDBInput,
+  MDBContainer,
 } from "mdb-react-ui-kit";
 import { AppContext } from "../App";
 import axios from "axios";
@@ -45,35 +46,28 @@ function TweetBox() {
   };
 
   return (
-    <MDBCard className="fluid" alignment="start" border="secondary">
-      <MDBCardHeader>
-        <img
-          src="https://mdbootstrap.com/img/Photos/Avatars/img%20(6).jpg"
-          alt="avatar"
-          className="rounded-circle"
-          height={"50px"}
-        />{" "}
-        <a href={`/profile/${currUser.username}`}>{currUser.username}</a>
-      </MDBCardHeader>
-      <form onSubmit={handleSubmit}>
-        <div className="form-outline">
-          <textarea
-            className="form-control"
-            id="textAreaExample"
-            rows="3"
-            value={formValue.text}
-            name="text"
-            onChange={onChange}
-          />
-          <label className="form-label" htmlFor="textAreaExample">
-            Start a new tweet
-          </label>
-        </div>
-        <MDBBtn type="submit" color="secondary" outline>
-          Tweet
-        </MDBBtn>
-      </form>
-    </MDBCard>
+    <MDBContainer fluid>
+      <MDBCard className="fluid" alignment="start" border="secondary">
+        <form onSubmit={handleSubmit}>
+          <div className="form-outline">
+            <textarea
+              className="form-control"
+              id="textAreaExample"
+              rows="3"
+              value={formValue.text}
+              name="text"
+              onChange={onChange}
+            />
+            <label className="form-label" htmlFor="textAreaExample">
+              Start a new tweet
+            </label>
+          </div>
+          <MDBBtn type="submit" color="secondary" outline>
+            Tweet
+          </MDBBtn>
+        </form>
+      </MDBCard>
+    </MDBContainer>
   );
 }
 
