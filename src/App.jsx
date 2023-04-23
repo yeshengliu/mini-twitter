@@ -3,51 +3,79 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
-import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import cookie from "js-cookie";
 import axios from "axios";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import IndexPage from "./pages/IndexPage";
+import WelcomePage from "./pages/WelcomePage";
+import ProfilePage from "./pages/ProfilePage";
+import Navbar from "./components/Navbar";
+import { MDBContainer } from "mdb-react-ui-kit";
 
 export const AppContext = createContext();
 
 function App() {
-  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currUser, setCurrUser] = useState({});
 
+  /**
+   * Validate the token and set logged in user
+   */
+
+  const navigate = useNavigate();
   useEffect(() => {
     const token = cookie.get("token");
-    console.log("token", token);
-    // redirect to login page if cookie is not set
+
     if (!token) {
-      navigate("/login");
+      setIsLoggedIn(false);
+      setCurrUser({});
     } else {
-      const fetchData = async (res) => {
-        try {
-          const res = await axios.get("/api/auth", {
-            headers: { authorization: token },
-          });
-          console.log(res.data);
-        } catch (err) {
-          console.error(err);
-          cookie.remove("token");
-          navigate("/login");
-        }
-      }
-      fetchData();
+      const fetchData = async () => {
+        const res = await axios.get("/api/auth", {
+          headers: { Authorization: token },
+        });
+        console.log(res.data);
+        setIsLoggedIn(true);
+        setCurrUser(res.data);
+      };
+      fetchData().catch((err) => {
+        // if token is not valid, remove it from cookie
+        console.error(err);
+        cookie.remove("token");
+        setIsLoggedIn(false);
+        setCurrUser({});
+      });
     }
   }, [navigate]);
 
   return (
-      <div className="App">
-        <AppContext.Provider value={{}}>
-          <Routes>
-            <Route exact path="/" element={<IndexPage />} />
-            <Route exact path="/login" element={<LoginPage />} />
-            <Route exact path="/register" element={<RegisterPage />} />
-          </Routes>
-        </AppContext.Provider>
-      </div>
+    <div className="App">
+      <AppContext.Provider
+        value={{
+          isLoggedIn,
+          setIsLoggedIn,
+          currUser,
+          setCurrUser,
+        }}
+      >
+        
+        <Navbar />
+        <Routes>
+          <Route exact path="/" element={<WelcomePage />} />
+          <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/register" element={<RegisterPage />} />
+          <Route exact path="/profile/:username" element={<ProfilePage />} />
+        </Routes>
+
+      </AppContext.Provider>
+    </div>
   );
 }
 

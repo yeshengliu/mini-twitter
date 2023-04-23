@@ -1,19 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const jwt = require('jsonwebtoken');
 
-const UserModel = require('../db/user.model');
+const UserModel = require("../db/user.model");
 
-const userDB = [];
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await UserModel.findUserById(id);
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+  res.status(200).send(user);
+});
 
-router.get('/', function(req, res) {
-  res.send(userDB);
-})
-
-router.post('/', async function(req, res) {
-  const body = req.body;
-
-  const newUserResponse = await UserModel.createUser(body);
-
-  res.send("New user created: " + newUserResponse);
-})
+module.exports = router;
