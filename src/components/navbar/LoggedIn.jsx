@@ -24,7 +24,9 @@ function LoggedIn() {
           {currUser.username}
         </MDBDropdownToggle>
         <MDBDropdownMenu>
-          <MDBDropdownItem link>Settings</MDBDropdownItem>
+          <MDBDropdownItem link href="/settings">
+            Settings
+          </MDBDropdownItem>
           <MDBDropdownItem link href={`/profile/${currUser.username}`}>
             My Page
           </MDBDropdownItem>

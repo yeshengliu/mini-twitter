@@ -21,6 +21,16 @@ exports.UserSchema = new Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+    },
+    bio: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
+    timestamp: { type: Date, default: Date.now },
   },
   { collection: 'users' }
 );

@@ -37,7 +37,7 @@ function RegisterPage() {
       }
       const avatarUrl = createAvatar(adventurerNeutral, {
         size: 128,
-        // ... other options
+        seed: formValue.username,
       }).toDataUriSync();
 
       const res = await axios.post('/api/register', {
@@ -45,6 +45,9 @@ function RegisterPage() {
         email: formValue.email,
         password: formValue.password,
         avatar: avatarUrl,
+        name: username,
+        bio: '',
+        description: '',
       });
       setErrMsg('');
       cookie.set('token', res.data);

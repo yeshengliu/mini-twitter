@@ -18,10 +18,15 @@ function findUserById(id) {
   return UserModel.findById(id).exec();
 }
 
+function updateUser(id, user) {
+  return UserModel.findByIdAndUpdate(id, user, { new: true }).exec();
+}
+
 module.exports = {
   UserModel,
   createUser,
   findUserByUsername,
   findUserByEmail,
-  findUserById
-}
+  findUserById,
+  updateUser,
+};

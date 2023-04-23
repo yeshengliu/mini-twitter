@@ -53,11 +53,16 @@
   max-width: 800px;
 }
 
-.text-muted {
+.ts-80 {
   font-size: 80%;
 }
 
 .place-holder {
   display: inline-block;
   width: 15px;
+}
+
+.img-info {
+  height: 200px;
+  object-fit: cover;
 }

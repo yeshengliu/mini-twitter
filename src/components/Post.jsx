@@ -123,7 +123,7 @@ function Post({ post, posts, setPosts }) {
           </form>
         )}
       </MDBCardBody>
-      <MDBCardFooter className="text-muted">
+      <MDBCardFooter className="text-muted ts-80">
         {new Date(post.timestamp).toLocaleString()}
       </MDBCardFooter>
     </MDBCard>
