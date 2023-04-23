@@ -23,12 +23,15 @@ function LoggedIn() {
           className="rounded-circle"
           height={"30px"}
         />
-        <MDBDropdownToggle className="shadow-0">
+        <span className="place-holder" />
+        <MDBDropdownToggle tag='a' className="shadow-0">
           {currUser.username}
         </MDBDropdownToggle>
         <MDBDropdownMenu>
           <MDBDropdownItem link>Setting</MDBDropdownItem>
-          <MDBDropdownItem link>My Page</MDBDropdownItem>
+          <MDBDropdownItem link href={`/profile/${currUser.username}`}>
+            My Page
+          </MDBDropdownItem>
           <MDBDropdownItem link>LogOut</MDBDropdownItem>
         </MDBDropdownMenu>
       </MDBDropdown>

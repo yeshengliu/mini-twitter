@@ -77,6 +77,7 @@ function Post(props) {
           className="rounded-circle"
           height={"50px"}
         />
+        <span className="place-holder" />
         <a href={`/profile/${username}`}>{username || post.user}</a>
       </MDBCardHeader>
       <MDBCardBody>
@@ -114,7 +115,9 @@ function Post(props) {
           </form>
         )}
       </MDBCardBody>
-      <MDBCardFooter className="text-muted">{post.timestamp}</MDBCardFooter>
+      <MDBCardFooter className="text-muted">
+        {new Date(post.timestamp).toLocaleString()}
+      </MDBCardFooter>
     </MDBCard>
   );
 }
