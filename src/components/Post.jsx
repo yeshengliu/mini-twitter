@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../App";
-import { Avatar } from "@material-ui/core";
+import React, { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../App';
+import { Avatar } from '@material-ui/core';
 import {
   MDBCard,
   MDBCardText,
@@ -11,36 +11,36 @@ import {
   MDBCardFooter,
   MDBBtnGroup,
   MDBIcon,
-} from "mdb-react-ui-kit";
-import axios from "axios";
+} from 'mdb-react-ui-kit';
+import axios from 'axios';
 
 function Post(props) {
   const { isLoggedIn, currUser } = useContext(AppContext);
   const { post } = props;
-  const [ showEditField, setShowEditField ] = useState(false);
-  const [ formValue, setFormValue ] = useState({
-    text: "",
-    picUrl: "testUrl",
+  const [showEditField, setShowEditField] = useState(false);
+  const [formValue, setFormValue] = useState({
+    text: '',
+    picUrl: 'testUrl',
   });
-  const [ username, setUsername ] = useState("");
+  const [user, setUser] = useState({});
 
-  // Get username from post
+  // Get user info from post
   useEffect(() => {
-    const getUsername = async () => {
+    const getUser = async () => {
       try {
-        const response = await axios.get(`/api/user/${post.user}`);
-        setUsername(response.data.username);
+        const res = await axios.get(`/api/user/${post.user}`);
+        setUser(res.data);
       } catch (err) {
         console.error(err);
       }
     };
-    getUsername();
+    getUser();
   }, []);
 
   // Functions for post editing
   const handleEdit = () => {
     showEditField ? setShowEditField(false) : setShowEditField(true);
-  }
+  };
 
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -52,7 +52,7 @@ function Post(props) {
       await axios.put(`/api/post/${post._id}`, {
         text: formValue.text,
       });
-      setFormValue({ ...formValue, text: "" });
+      setFormValue({ ...formValue, text: '' });
       setShowEditField(false);
     } catch (err) {
       console.error(err);
@@ -72,23 +72,27 @@ function Post(props) {
     <MDBCard className="fluid" alignment="start">
       <MDBCardHeader>
         <img
-          src="https://mdbootstrap.com/img/Photos/Avatars/img%20(6).jpg"
+          src={user.avatar}
           alt="avatar"
           className="rounded-circle"
-          height={"50px"}
+          height={'50px'}
         />
         <span className="place-holder" />
-        <a href={`/profile/${username}`}>{username || post.user}</a>
+        <a href={`/profile/${user.username}`}>{user.username}</a>
       </MDBCardHeader>
       <MDBCardBody>
         <MDBCardText>{post.text}</MDBCardText>
         {isLoggedIn && currUser._id === post.user && (
-          <MDBBtnGroup shadow="0" aria-label="Basic example" className="float-end">
+          <MDBBtnGroup
+            shadow="0"
+            aria-label="Basic example"
+            className="float-end"
+          >
             <MDBBtn color="secondary" outline onClick={handleEdit}>
-              <MDBIcon far icon="edit"/>
+              <MDBIcon far icon="edit" />
             </MDBBtn>
             <MDBBtn color="secondary" outline onClick={handleDelete}>
-              <MDBIcon far icon="trash-alt"/>
+              <MDBIcon far icon="trash-alt" />
             </MDBBtn>
           </MDBBtnGroup>
         )}
@@ -107,7 +111,11 @@ function Post(props) {
                 Edit your post
               </label>
             </div>
-            <MDBBtnGroup shadow="0" aria-label="Basic example" className="float-end">
+            <MDBBtnGroup
+              shadow="0"
+              aria-label="Basic example"
+              className="float-end"
+            >
               <MDBBtn type="submit" color="secondary" outline>
                 Submit
               </MDBBtn>
