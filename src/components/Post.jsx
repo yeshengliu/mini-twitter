@@ -14,9 +14,8 @@ import {
 } from 'mdb-react-ui-kit';
 import axios from 'axios';
 
-function Post(props) {
+function Post({ post, posts, setPosts }) {
   const { isLoggedIn, currUser } = useContext(AppContext);
-  const { post } = props;
   const [showEditField, setShowEditField] = useState(false);
   const [formValue, setFormValue] = useState({
     text: '',
@@ -63,6 +62,7 @@ function Post(props) {
   const handleDelete = async () => {
     try {
       await axios.delete(`/api/post/${post._id}`);
+      setPosts(posts.filter((p) => p._id !== post._id));
     } catch (err) {
       console.error(err);
     }

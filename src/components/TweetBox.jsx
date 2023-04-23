@@ -1,24 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBCardHeader,
-  MDBValidation,
-  MDBValidationItem,
-  MDBInput,
-  MDBContainer,
-} from "mdb-react-ui-kit";
-import { AppContext } from "../App";
-import axios from "axios";
+import React, { useContext, useState } from 'react';
+import { MDBCard, MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
+import { AppContext } from '../App';
+import axios from 'axios';
 
-function TweetBox() {
+function TweetBox({ posts, setPosts }) {
   const { isLoggedIn, currUser } = useContext(AppContext);
 
   const [formValue, setFormValue] = useState({
-    text: "",
-    picUrl: "testUrl",
+    text: '',
+    picUrl: 'testUrl',
   });
 
   const onChange = (e) => {
@@ -28,18 +18,19 @@ function TweetBox() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("submit");
     if (!isLoggedIn) {
       return;
     }
 
     try {
-      await axios.post("/api/post", {
+      const newPost = {
         user: currUser._id,
         text: formValue.text,
         picUrl: formValue.picUrl,
-      });
-      setFormValue({ ...formValue, text: "" });
+      };
+      await axios.post('/api/post', newPost);
+      setFormValue({ ...formValue, text: '' });
+      setPosts([...posts, newPost]);
     } catch (err) {
       console.log(err);
     }
