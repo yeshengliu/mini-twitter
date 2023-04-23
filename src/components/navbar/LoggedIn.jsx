@@ -10,10 +10,6 @@ import { AppContext } from "../../App";
 function LoggedIn() {
   const { currUser } = useContext(AppContext);
 
-  // TODO: logout function
-  // TODO: go to my page
-  // TODO: go to settings
-
   return (
     <div>
       <MDBDropdown>
@@ -28,11 +24,15 @@ function LoggedIn() {
           {currUser.username}
         </MDBDropdownToggle>
         <MDBDropdownMenu>
-          <MDBDropdownItem link>Setting</MDBDropdownItem>
+          <MDBDropdownItem link>
+            Settings
+          </MDBDropdownItem>
           <MDBDropdownItem link href={`/profile/${currUser.username}`}>
             My Page
           </MDBDropdownItem>
-          <MDBDropdownItem link>LogOut</MDBDropdownItem>
+          <MDBDropdownItem link href='/logout'>
+            Log out
+          </MDBDropdownItem>
         </MDBDropdownMenu>
       </MDBDropdown>
     </div>
