@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../App';
-import { Avatar } from '@material-ui/core';
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "../App";
+import { Avatar } from "@material-ui/core";
 import {
   MDBCard,
   MDBCardText,
@@ -11,15 +11,16 @@ import {
   MDBCardFooter,
   MDBBtnGroup,
   MDBIcon,
-} from 'mdb-react-ui-kit';
-import axios from 'axios';
+  MDBInput,
+} from "mdb-react-ui-kit";
+import axios from "axios";
 
 function Post({ post, posts, setPosts }) {
   const { isLoggedIn, currUser } = useContext(AppContext);
   const [showEditField, setShowEditField] = useState(false);
   const [formValue, setFormValue] = useState({
-    text: '',
-    picUrl: 'testUrl',
+    text: "",
+    picUrl: "",
   });
   const [user, setUser] = useState({});
 
@@ -33,7 +34,20 @@ function Post({ post, posts, setPosts }) {
         console.error(err);
       }
     };
+    // const getPost = async () => {
+    //   try {
+    //     const res = await axios.get(`/api/post/${post._id}`);
+    //     setFormValue({
+    //       ...formValue,
+    //       text: res.data.text,
+    //       picUrl: res.data.picUrl,
+    //     });
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // };
     getUser();
+    // getPost();
   }, []);
 
   // Functions for post editing
@@ -51,7 +65,7 @@ function Post({ post, posts, setPosts }) {
       await axios.put(`/api/post/${post._id}`, {
         text: formValue.text,
       });
-      setFormValue({ ...formValue, text: '' });
+      setFormValue({ ...formValue, text: "" });
       setShowEditField(false);
     } catch (err) {
       console.error(err);
@@ -75,11 +89,14 @@ function Post({ post, posts, setPosts }) {
           src={user.avatar}
           alt="avatar"
           className="rounded-circle"
-          height={'50px'}
+          height={"50px"}
         />
         <span className="place-holder" />
         <a href={`/profile/${user.username}`}>{user.username}</a>
       </MDBCardHeader>
+      {post.picUrl && (
+        <MDBCardImage src={post.picUrl} position="top" alt="failed to load" />
+      )}
       <MDBCardBody>
         <MDBCardText>{post.text}</MDBCardText>
         {isLoggedIn && currUser._id === post.user && (
@@ -107,6 +124,13 @@ function Post({ post, posts, setPosts }) {
                 name="text"
                 onChange={onChange}
               />
+              {/* <MDBInput
+                wrapperClass="mb-4 w-100"
+                value={formValue.picUrl}
+                name="picUrl"
+                onChange={onChange}
+                label="Image Url (optional)"
+              /> */}
               <label className="form-label" htmlFor="textAreaExample">
                 Edit your post
               </label>

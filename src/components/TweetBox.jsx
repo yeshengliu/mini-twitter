@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import { MDBCard, MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
-import { AppContext } from '../App';
-import axios from 'axios';
+import React, { useContext, useState } from "react";
+import { MDBCard, MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
+import { AppContext } from "../App";
+import axios from "axios";
 
 function TweetBox({ posts, setPosts }) {
   const { isLoggedIn, currUser } = useContext(AppContext);
 
   const [formValue, setFormValue] = useState({
-    text: '',
-    picUrl: 'testUrl',
+    text: "",
+    picUrl: "",
   });
 
   const onChange = (e) => {
@@ -28,8 +28,8 @@ function TweetBox({ posts, setPosts }) {
         text: formValue.text,
         picUrl: formValue.picUrl,
       };
-      await axios.post('/api/post', newPost);
-      setFormValue({ ...formValue, text: '' });
+      await axios.post("/api/post", newPost);
+      setFormValue({ ...formValue, text: "" });
       setPosts([...posts, newPost]);
     } catch (err) {
       console.log(err);
@@ -53,6 +53,13 @@ function TweetBox({ posts, setPosts }) {
               Start a new tweet
             </label>
           </div>
+          <MDBInput
+            wrapperClass="mb-4 w-100"
+            value={formValue.picUrl}
+            name="picUrl"
+            onChange={onChange}
+            label="Image Url (optional)"
+          />
           <MDBBtn type="submit" color="secondary" outline>
             Tweet
           </MDBBtn>

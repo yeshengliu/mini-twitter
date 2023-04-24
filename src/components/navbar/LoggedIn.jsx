@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import {
   MDBDropdown,
   MDBDropdownMenu,
   MDBDropdownToggle,
   MDBDropdownItem,
-} from 'mdb-react-ui-kit';
-import { AppContext } from '../../App';
+} from "mdb-react-ui-kit";
+import { AppContext } from "../../App";
 
 function LoggedIn() {
   const { currUser } = useContext(AppContext);
@@ -17,13 +17,16 @@ function LoggedIn() {
           src={currUser.avatar}
           alt="avatar"
           className="rounded-circle"
-          height={'30px'}
+          height={"30px"}
         />
         <span className="place-holder" />
         <MDBDropdownToggle tag="a" className="shadow-0">
           {currUser.username}
         </MDBDropdownToggle>
         <MDBDropdownMenu>
+          <MDBDropdownItem link href="/">
+            Start a tweet
+          </MDBDropdownItem>
           <MDBDropdownItem link href="/settings">
             Settings
           </MDBDropdownItem>

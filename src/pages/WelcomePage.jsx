@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
-import TweetBox from '../components/TweetBox';
-import AllFeeds from '../components/AllFeeds';
-import { AppContext } from '../App';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import React, { useContext, useState } from "react";
+import TweetBox from "../components/TweetBox";
+import AllFeeds from "../components/AllFeeds";
+import { AppContext } from "../App";
+import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 
 function WelcomePage() {
   const { isLoggedIn } = useContext(AppContext);
@@ -10,8 +10,8 @@ function WelcomePage() {
 
   return (
     <MDBContainer fluid>
-      <MDBRow className="d-flex justify-content-center ">
-        <MDBCol md="10" className="mt-5">
+      <MDBRow className="d-flex justify-content-center">
+        <MDBCol md="6" className="mt-2">
           {isLoggedIn && <TweetBox posts={posts} setPosts={setPosts} />}
           <br />
           <AllFeeds posts={posts} setPosts={setPosts} />

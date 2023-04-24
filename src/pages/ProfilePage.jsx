@@ -1,8 +1,8 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import Feeds from '../components/Feeds';
-import UserInfo from '../components/UserInfo';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import React from "react";
+import { useParams } from "react-router-dom";
+import Feeds from "../components/Feeds";
+import UserInfo from "../components/UserInfo";
+import { MDBContainer, MDBRow, MDBCol } from "mdb-react-ui-kit";
 
 function ProfilePage() {
   const { username } = useParams();

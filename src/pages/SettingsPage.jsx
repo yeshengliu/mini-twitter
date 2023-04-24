@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   MDBContainer,
   MDBRow,
@@ -6,23 +6,23 @@ import {
   MDBInput,
   MDBBtn,
   MDBTextArea,
-} from 'mdb-react-ui-kit';
-import { AppContext } from '../App';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+} from "mdb-react-ui-kit";
+import { AppContext } from "../App";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function SettingsPage() {
   const navigate = useNavigate();
   const { isLoggedIn, currUser } = useContext(AppContext);
 
   const [formValue, setFormValue] = useState({
-    name: currUser.name || '',
-    bio: currUser.bio || '',
-    description: currUser.description || '',
+    name: currUser.name,
+    bio: currUser.bio,
+    description: currUser.description,
   });
 
   if (!isLoggedIn) {
-    navigate('/login');
+    navigate("/login");
   }
 
   const onChange = (e) => {
@@ -59,6 +59,7 @@ function SettingsPage() {
             className="mb-4 mt-4"
             id="name"
             label="Name"
+            // valueDefault={currUser.name}
             value={formValue.name}
             name="name"
             onChange={onChange}
@@ -67,6 +68,7 @@ function SettingsPage() {
             className="mb-4 mt-4"
             id="bio"
             label="Bio"
+            // valueDefault={currUser.bio}
             value={formValue.bio}
             name="bio"
             onChange={onChange}
@@ -76,6 +78,7 @@ function SettingsPage() {
             id="description"
             label="Description"
             rows={2}
+            // defaultValue={currUser.description}
             value={formValue.description}
             name="description"
             onChange={onChange}

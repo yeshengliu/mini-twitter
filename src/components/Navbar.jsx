@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import {
   MDBContainer,
   MDBIcon,
   MDBNavbar,
   MDBNavbarBrand,
-} from 'mdb-react-ui-kit';
-import { AppContext } from '../App';
-import NotLoggedIn from './navbar/NotLoggedIn';
-import LoggedIn from './navbar/LoggedIn';
+} from "mdb-react-ui-kit";
+import { AppContext } from "../App";
+import NotLoggedIn from "./navbar/NotLoggedIn";
+import LoggedIn from "./navbar/LoggedIn";
 
 function Navbar() {
   const { isLoggedIn } = useContext(AppContext);
@@ -15,7 +15,7 @@ function Navbar() {
     <MDBNavbar sticky expand="lg" light bgColor="light">
       <MDBContainer fluid>
         <MDBNavbarBrand href="/">
-          <MDBIcon fas icon="crow fa-2x me-3" style={{ color: '#709085' }} />
+          <MDBIcon fas icon="crow fa-2x me-3" style={{ color: "#709085" }} />
         </MDBNavbarBrand>
 
         {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}

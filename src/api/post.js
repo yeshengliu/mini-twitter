@@ -14,12 +14,24 @@ router.get("/", async function (req, res) {
   }
 });
 
+// Get post with id
+router.get("/id/:id", async function (req, res) {
+  const { id } = req.params;
+  try {
+    const post = await PostModel.findPostById(id);
+    res.status(200).send(post);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal server error");
+  }
+});
+
 // Get post with userId
 router.get("/:username", async function (req, res) {
   try {
     const { username } = req.params;
     const user = await UserModel.findUserByUsername(username);
-    
+
     if (!user) {
       return res.status(404).send("User not found");
     }
