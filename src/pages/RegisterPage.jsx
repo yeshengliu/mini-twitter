@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -7,22 +7,22 @@ import {
   MDBInput,
   MDBValidation,
   MDBValidationItem,
-} from 'mdb-react-ui-kit';
-import { MDBIcon } from 'mdbreact';
-import loginimg from '../assets/login.jpg';
-import axios from 'axios';
-import { createAvatar } from '@dicebear/core';
-import { adventurerNeutral } from '@dicebear/collection';
-import cookie from 'js-cookie';
+} from "mdb-react-ui-kit";
+import { MDBIcon } from "mdbreact";
+import loginimg from "../assets/login.jpg";
+import axios from "axios";
+import { createAvatar } from "@dicebear/core";
+import { adventurerNeutral } from "@dicebear/collection";
+import cookie from "js-cookie";
 
 function RegisterPage() {
   const [formValue, setFormValue] = React.useState({
-    username: '',
-    email: '',
-    password: '',
-    rePassword: '',
+    username: "",
+    email: "",
+    password: "",
+    rePassword: "",
   });
-  const [errMsg, setErrMsg] = React.useState('');
+  const [errMsg, setErrMsg] = React.useState("");
 
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -32,7 +32,7 @@ function RegisterPage() {
     e.preventDefault();
     try {
       if (formValue.password !== formValue.rePassword) {
-        setErrMsg('Passwords do not match');
+        setErrMsg("Passwords do not match");
         return;
       }
       const avatarUrl = createAvatar(adventurerNeutral, {
@@ -40,21 +40,22 @@ function RegisterPage() {
         seed: formValue.username,
       }).toDataUriSync();
 
-      const res = await axios.post('/api/register', {
+      const res = await axios.post("/api/register", {
         username: formValue.username,
         email: formValue.email,
         password: formValue.password,
         avatar: avatarUrl,
-        name: username,
-        bio: '',
-        description: '',
+        name: formValue.username,
+        bio: "",
+        description: "",
       });
-      setErrMsg('');
-      cookie.set('token', res.data);
+      setErrMsg("");
+      cookie.set("token", res.data);
       // redirect to home page
-      window.location.href = '/';
+      window.location.href = "/";
     } catch (err) {
       setErrMsg(err.response.data);
+      // console.error(err);
     }
   };
 
@@ -66,12 +67,12 @@ function RegisterPage() {
             src={loginimg}
             alt="Login image"
             className="w-100"
-            style={{ objectFit: 'cover', objectPosition: 'left' }}
+            style={{ objectFit: "cover", objectPosition: "left" }}
           />
         </MDBCol>
         <MDBCol sm="6">
           <div className="pt-5">
-            <MDBIcon fas icon="crow fa-3x me-3" style={{ color: '#709085' }} />
+            <MDBIcon fas icon="crow fa-3x me-3" style={{ color: "#709085" }} />
             <span className="h1 fw-bold mb-0">Twitter</span>
           </div>
 
@@ -83,7 +84,7 @@ function RegisterPage() {
             <div className="w-50 pt-4">
               <h3
                 className="fw-normal mb-3 ps-0 pb-3 text-start"
-                style={{ letterSpacing: '1px' }}
+                style={{ letterSpacing: "1px" }}
               >
                 Register
               </h3>
@@ -173,7 +174,7 @@ function RegisterPage() {
             )}
 
             <p>
-              Already have an account?{' '}
+              Already have an account?{" "}
               <a href="/login" className="link-info">
                 Login here
               </a>
