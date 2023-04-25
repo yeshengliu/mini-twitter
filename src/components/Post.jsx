@@ -61,14 +61,16 @@ function Post({ post, posts, setPosts }) {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.put(`/api/post/${post._id}`, {
-        text: formValue.text,
-      });
-      setFormValue({ ...formValue, text: "" });
-      setShowEditField(false);
-    } catch (err) {
-      console.error(err);
+    if (formValue.text) {
+      try {
+        await axios.put(`/api/post/${post._id}`, {
+          text: formValue.text,
+        });
+        setFormValue({ ...formValue, text: "" });
+        setShowEditField(false);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 

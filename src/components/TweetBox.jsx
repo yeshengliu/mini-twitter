@@ -29,7 +29,7 @@ function TweetBox({ posts, setPosts }) {
         picUrl: formValue.picUrl,
       };
       await axios.post("/api/post", newPost);
-      setFormValue({ ...formValue, text: "" });
+      setFormValue({ ...formValue, text: "", picUrl: "" });
       setPosts([...posts, newPost]);
     } catch (err) {
       console.log(err);
