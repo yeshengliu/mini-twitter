@@ -16,9 +16,15 @@ function Navbar() {
     <MDBNavbar sticky expand="lg" light bgColor="light">
       <MDBContainer fluid>
         <MDBNavbarBrand href="/">
-          <MDBIcon fas icon="crow fa-2x me-3" style={{ color: "#709085" }} />
+          <MDBIcon
+            id="logo"
+            fas
+            icon="crow fa-2x me-3"
+            style={{ color: "#709085" }}
+          />
         </MDBNavbarBrand>
         <SearchBar />
+
         {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}
       </MDBContainer>
     </MDBNavbar>

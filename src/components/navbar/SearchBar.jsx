@@ -27,12 +27,11 @@ function SearchBar() {
         users.filter((user) => user.toLowerCase().includes(value.toLowerCase()))
       );
       setValue("");
-      console.log("match", match);
     });
   };
 
   return (
-    <div onSubmit={handleSubmit}>
+    <div id="navbarSearch" onSubmit={handleSubmit}>
       <MDBInputGroup tag="form" className="d-flex w-auto mb-3">
         <input
           className="form-control"
@@ -42,8 +41,11 @@ function SearchBar() {
           value={value}
           onChange={onChange}
         />
+        <span className="place-holder"> </span>
         <MDBDropdown className="btn-group" dropleft group>
-          <MDBDropdownToggle type="submit">Search</MDBDropdownToggle>
+          <MDBDropdownToggle type="submit" outline>
+            Search
+          </MDBDropdownToggle>
           <MDBDropdownMenu>
             {match.map((user) => (
               <MDBDropdownItem link key={user} href={`/profile/${user}`}>
@@ -52,10 +54,6 @@ function SearchBar() {
             ))}
           </MDBDropdownMenu>
         </MDBDropdown>
-
-        {/* <MDBBtn outline type="submit">
-          Search
-        </MDBBtn> */}
       </MDBInputGroup>
     </div>
   );

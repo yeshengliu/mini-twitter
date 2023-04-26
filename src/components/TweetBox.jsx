@@ -5,6 +5,7 @@ import axios from "axios";
 
 function TweetBox({ posts, setPosts }) {
   const { isLoggedIn, currUser } = useContext(AppContext);
+  const [showPicInput, setShowPicInput] = useState(false);
 
   const [formValue, setFormValue] = useState({
     text: "",
@@ -36,6 +37,10 @@ function TweetBox({ posts, setPosts }) {
     }
   };
 
+  const updatePicInput = () => {
+    setShowPicInput(!showPicInput);
+  };
+
   return (
     <MDBContainer fluid>
       <MDBCard className="fluid" alignment="start" border="secondary">
@@ -53,13 +58,24 @@ function TweetBox({ posts, setPosts }) {
               Start a new tweet
             </label>
           </div>
-          <MDBInput
-            wrapperClass="mb-4 w-100"
-            value={formValue.picUrl}
-            name="picUrl"
-            onChange={onChange}
-            label="Image Url (optional)"
-          />
+          {showPicInput && (
+            <MDBInput
+              wrapperClass="mb-4 w-100"
+              value={formValue.picUrl}
+              name="picUrl"
+              onChange={onChange}
+              label="Image Url (optional)"
+            />
+          )}
+
+          <MDBBtn
+            type="picInput"
+            color="secondary"
+            outline
+            onClick={updatePicInput}
+          >
+            Upload Image
+          </MDBBtn>
           <MDBBtn type="submit" color="secondary" outline>
             Tweet
           </MDBBtn>
