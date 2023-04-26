@@ -16,8 +16,9 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import WelcomePage from "./pages/WelcomePage";
 import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
+import LogoutPage from "./pages/LogoutPage";
 import Navbar from "./components/Navbar";
-import { MDBContainer } from "mdb-react-ui-kit";
 
 export const AppContext = createContext();
 
@@ -65,15 +66,15 @@ function App() {
           setCurrUser,
         }}
       >
-        
         <Navbar />
         <Routes>
           <Route exact path="/" element={<WelcomePage />} />
           <Route exact path="/login" element={<LoginPage />} />
           <Route exact path="/register" element={<RegisterPage />} />
           <Route exact path="/profile/:username" element={<ProfilePage />} />
+          <Route exact path="/settings" element={<SettingsPage />} />
+          <Route exact path="/logout" element={<LogoutPage />} />
         </Routes>
-
       </AppContext.Provider>
     </div>
   );

@@ -1,9 +1,13 @@
-const mongoose = require('mongoose');
-const UserSchema = require('./user.schema').UserSchema;
-const UserModel = mongoose.model('UserModel', UserSchema);
+const mongoose = require("mongoose");
+const UserSchema = require("./user.schema").UserSchema;
+const UserModel = mongoose.model("UserModel", UserSchema);
 
 function createUser(user) {
   return UserModel.create(user);
+}
+
+function findAllUsers() {
+  return UserModel.find().exec();
 }
 
 function findUserByUsername(username) {
@@ -18,10 +22,16 @@ function findUserById(id) {
   return UserModel.findById(id).exec();
 }
 
+function updateUser(id, user) {
+  return UserModel.findByIdAndUpdate(id, user, { new: true }).exec();
+}
+
 module.exports = {
   UserModel,
   createUser,
   findUserByUsername,
   findUserByEmail,
-  findUserById
-}
+  findUserById,
+  updateUser,
+  findAllUsers,
+};

@@ -1,16 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const UserModel = require('../db/user.model');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const isEmail = require('validator/lib/isEmail');
+const UserModel = require("../db/user.model");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const isEmail = require("validator/lib/isEmail");
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
 /**
  * User submit at register page
  */
-router.post('/', async (req, res) => {
-  const { username, password, email } = req.body;
+router.post("/", async (req, res) => {
+  const { username, password, email, avatar, name, bio, description } =
+    req.body;
 
   // Return 401 if username is not valid
   if (username.length < 3 || !regexUserName.test(username)) {
@@ -44,23 +45,32 @@ router.post('/', async (req, res) => {
       username,
       password: bcrypt.hashSync(password, 10),
       email,
+      avatar,
+      name,
+      bio,
+      description,
     });
 
     await UserModel.createUser(user);
 
     // Send back to front end
     const payload = { userId: user._id };
-    jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '2d' }, (err, token) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send("Internal server error");
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: "2d" },
+      (err, token) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send("Internal server error");
+        }
+        return res.status(200).json(token);
       }
-      return res.status(200).json(token);
-    });
+    );
   } catch (err) {
     console.error(err);
     return res.status(500).send("Internal server error");
   }
-})
+});
 
 module.exports = router;

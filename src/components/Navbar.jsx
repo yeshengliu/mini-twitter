@@ -1,23 +1,31 @@
 import React, { useContext } from "react";
-import { MDBContainer, MDBIcon, MDBNavbar, MDBNavbarBrand } from "mdb-react-ui-kit";
-import { useNavigate } from "react-router-dom";
+import {
+  MDBContainer,
+  MDBIcon,
+  MDBNavbar,
+  MDBNavbarBrand,
+} from "mdb-react-ui-kit";
 import { AppContext } from "../App";
 import NotLoggedIn from "./navbar/NotLoggedIn";
 import LoggedIn from "./navbar/LoggedIn";
+import SearchBar from "./navbar/SearchBar";
 
 function Navbar() {
   const { isLoggedIn } = useContext(AppContext);
-  const navigate = useNavigate();
   return (
-    <MDBNavbar expand='lg' light bgColor='light'>
+    <MDBNavbar sticky expand="lg" light bgColor="light">
       <MDBContainer fluid>
-      
-          <MDBNavbarBrand href="/">
-              <MDBIcon fas icon="crow fa-2x me-3" style={{ color: "#709085" }} />
-          </MDBNavbarBrand>
+        <MDBNavbarBrand href="/">
+          <MDBIcon
+            id="logo"
+            fas
+            icon="crow fa-2x me-3"
+            style={{ color: "#709085" }}
+          />
+        </MDBNavbarBrand>
+        <SearchBar />
 
-          {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}
-
+        {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}
       </MDBContainer>
     </MDBNavbar>
   );
