@@ -25,11 +25,10 @@ app.use('/api/auth/', require('./src/api/auth'));
 app.use('/api/post/', require('./src/api/post'));
 app.use('/api/user/', require('./src/api/user'));
 
-let frontend_dir = path.join(__dirname, '.', 'dist');
+let frontend_dir = path.join(__dirname, '..', 'frontend', 'dist');
 app.use(express.static(frontend_dir));
 app.get('*', function (req, res) {
   console.log('received request');
-  console.log(req);
   res.sendFile(path.join(frontend_dir, 'index.html'));
 });
 
