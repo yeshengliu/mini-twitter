@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useLocation } from "react-router-dom";
 import {
   MDBContainer,
   MDBIcon,
@@ -12,6 +13,12 @@ import SearchBar from "./navbar/SearchBar";
 
 function Navbar() {
   const { isLoggedIn } = useContext(AppContext);
+
+  const location = useLocation();
+
+  const isRegisterPage = location.pathname === "/register";
+  const isLogInPage = location.pathname === "/login";
+
   return (
     <MDBNavbar sticky expand="lg" light bgColor="light">
       <MDBContainer fluid>
@@ -23,7 +30,7 @@ function Navbar() {
             style={{ color: "#709085" }}
           />
         </MDBNavbarBrand>
-        <SearchBar />
+        {!isRegisterPage && !isLogInPage && <SearchBar />}
 
         {isLoggedIn ? <LoggedIn /> : <NotLoggedIn />}
       </MDBContainer>

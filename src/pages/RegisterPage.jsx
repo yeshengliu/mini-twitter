@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import {
   MDBBtn,
   MDBContainer,
@@ -14,6 +15,7 @@ import axios from "axios";
 import { createAvatar } from "@dicebear/core";
 import { adventurerNeutral } from "@dicebear/collection";
 import cookie from "js-cookie";
+import { Link } from "react-router-dom";
 
 function RegisterPage() {
   const [formValue, setFormValue] = React.useState({
@@ -23,6 +25,10 @@ function RegisterPage() {
     rePassword: "",
   });
   const [errMsg, setErrMsg] = React.useState("");
+  const location = useLocation();
+
+  const isRegisterPage = location.pathname === "/register";
+  const isLogInPage = location.pathname === "/login";
 
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
@@ -72,8 +78,15 @@ function RegisterPage() {
         </MDBCol>
         <MDBCol sm="6">
           <div className="pt-5">
-            <MDBIcon fas icon="crow fa-3x me-3" style={{ color: "#709085" }} />
-            <span className="h1 fw-bold mb-0">Twitter</span>
+            <Link to="/" className="link">
+              {" "}
+              <MDBIcon
+                fas
+                icon="crow fa-3x me-3"
+                style={{ color: "#709085" }}
+              />
+              <span className="h1 fw-bold mb-0">Twitter</span>
+            </Link>
           </div>
 
           {/* https://mdbootstrap.com/docs/react/forms/validation/#docsTabsOverview */}
