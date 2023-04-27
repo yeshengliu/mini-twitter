@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
-import { MDBCard, MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
-import { AppContext } from "../App";
-import axios from "axios";
+import React, { useContext, useState } from 'react';
+import { MDBCard, MDBBtn, MDBContainer, MDBInput } from 'mdb-react-ui-kit';
+import { AppContext } from '../App';
+import axios from 'axios';
 
 function TweetBox({ posts, setPosts }) {
   const { isLoggedIn, currUser } = useContext(AppContext);
   const [showPicInput, setShowPicInput] = useState(false);
 
   const [formValue, setFormValue] = useState({
-    text: "",
-    picUrl: "",
+    text: '',
+    picUrl: '',
   });
 
   const onChange = (e) => {
@@ -29,8 +29,8 @@ function TweetBox({ posts, setPosts }) {
         text: formValue.text,
         picUrl: formValue.picUrl,
       };
-      await axios.post("/api/post", newPost);
-      setFormValue({ ...formValue, text: "", picUrl: "" });
+      await axios.post('/api/post', newPost);
+      setFormValue({ ...formValue, text: '', picUrl: '' });
       setPosts([...posts, newPost]);
     } catch (err) {
       console.log(err);
@@ -69,7 +69,7 @@ function TweetBox({ posts, setPosts }) {
           )}
 
           <MDBBtn
-            type="picInput"
+            type="button"
             color="secondary"
             outline
             onClick={updatePicInput}
